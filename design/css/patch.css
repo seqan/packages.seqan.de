@@ -1,0 +1,96 @@
+
+
+  /**
+ * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
+ *
+ * (en) IE-Patch stylesheet for YAML standard layout (3 columns without column dividers)
+ * (de) IE-Korrektur-Stylesheet für das YAML Standard-Layout (3 Spalten ohne Spaltentrenner)
+ *
+ * @copyright       Copyright 2005-2009, Dirk Jesse
+ * @license         CC-A 2.0 (http://creativecommons.org/licenses/by/2.0/),
+ *                  YAML-C (http://www.yaml.de/en/license/license-conditions.html)
+ * @link            http://www.yaml.de
+ * @package         yaml
+ * @version         3.1
+ * @revision        $Revision: 343 $
+ * @lastmodified    $Date: 2009-01-19 23:41:32 +0100 (Mo, 19. Jan 2009) $
+*/
+
+/**
+ * Modifikationen, Ergaenzungen, Copyright:
+ * CeDiS, http://www.cedis.fu-berlin.de
+ * Datum: 13.05.2011
+*/
+
+/* Layout independent adjustments | Layout-unabhängige Anpassungen  
+@import url(yaml_iehacks.css);
+*/
+/* Layout-dependent adjustments | Layout-abhängige Anpassungen */
+@media screen, projection
+{
+  /**
+   * min-width/max-width workaround for IE
+   *
+   * @workaround
+   * @affected   IE 5.x/Win, IE6
+   * @css-for    IE 5.x/Win, IE6
+   * @valid      no
+  */
+
+  * html .page_margins {
+    /* Fallback if JavaScript is disabled */
+    width: auto;
+
+    /* JS-Expression for min-/max-width simulation */
+    width: expression((document.documentElement && document.documentElement.clientHeight) ? ((document.documentElement.clientWidth < 740) ? (740 - parseInt(this.currentStyle.paddingLeft)- parseInt(this.currentStyle.paddingRight))+"px" : ((document.documentElement.clientWidth > (92 * 16 * (parseInt(this.parentNode.currentStyle.fontSize) / 100))) ? "90em" : "auto" )) : ((document.body.clientWidth < 740) ? "740px" : ((document.body.clientWidth > (90 * 16 * (parseInt(this.parentNode.currentStyle.fontSize) / 100))) ? "90em" : "auto" )));
+
+  }
+
+  * html .subcolumns .subc,
+  * html .subcolumns .subcl,
+  * html .subcolumns .subcr { word-wrap: normal; }
+
+  /**
+   * Anpassungen CEDIS
+  */
+
+  * html .c10l, * html .c10r, * html .c20l, * html .c20r, * html .c30l, * html .c30r, * html .c40l, * html .c40r, * html .c50l, * html .c50r, * html .c60l, * html .c60r, * html .c70l, * html .c70r, * html .c80l, * html .c80r, * html .c90l, * html .c90r {display:inline};
+
+  /* transform CSS tables back into floats */
+  .equalize .c25l,.equalize .c33l,.equalize .c38l,.equalize .c50l,.equalize .c66l,.equalize .c75l,.equalize .c62l,
+  .equalize .c10l,.equalize .c20l,.equalize .c30l,.equalize .c40l,.equalize .c50l,.equalize .c60l,.equalize .c70l,.equalize .c80l,.equalize .c90l {
+    float: left; display:inline;
+    padding-bottom: 3000px;
+    margin-bottom: -3000px;
+  }
+  .equalize .c25r,.equalize .c33r,.equalize .c38r,.equalize .c50r,.equalize .c66r,.equalize .c75r,.equalize .c62r,
+  .equalize .c10r,.equalize .c20r,.equalize .c30r,.equalize .c40r,.equalize .c50r,.equalize .c60r,.equalize .c70r,.equalize .c80r,.equalize .c90r {
+    float: right; margin-left: -5px; display:inline;
+    padding-bottom: 3000px;
+    margin-bottom: -3000px;
+  }
+
+  .box_border_c20_subc_bottom {
+    background:  url(/images/fu-berlin/box_border_c20_subc_bottom_ie7.gif?54) no-repeat;
+    height: 40px;
+    background-position: 5px -1960px;
+  }
+
+  #search .search_input {
+    margin: -1px 0 0 -10px;
+    border: 0;
+    height: 15px;
+    padding: 6px 40px 0 10px;
+    width: 83px;
+  }
+
+  .min_height_250_ie7 {
+    min-height: 250px;
+  }
+
+  .open_nav_button, .close_nav_button {
+    padding-top: 7px;
+  }
+}
+
+

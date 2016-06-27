@@ -1,0 +1,35 @@
+/*
+Theme Name: FU Berlin WordPress Theme
+Theme URI: http://svn.mi.fu-berlin.de/fub-themes/wp/trunk
+Description: WordPress Theme Based On FU Berlin CD.
+Version: trunk
+Author: Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>
+Author URI: http://www.inf.fu-berlin.de/en/groups/abi/members/holtgrewe.html
+*/
+
+/* Styles to make included images look better with their caption.
+ */
+
+p.wp-caption-text {
+    text-align: center;
+}
+
+.aligncenter {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p.wp-caption-text {
+    background-color: #eee;
+    margin-bottom: 1em;
+}
+
+/* Gradient at top of page. */
+div.page_margins.gradient {
+  background: #fff url(images/gradient_top.png) repeat-x;
+}
+
+div.gradient div#header {
+  height: 114px;
+}
