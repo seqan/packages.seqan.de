@@ -1154,7 +1154,6 @@ z.z. auskommentiert
 .breadcrumbs li, #main_content .breadcrumbs li {
   display: inline;
   padding: 0 14px 0 0;
-  background-image: url(../images/link_list_arrow_grey.png);
   background-position: 100% -488px;
   background-repeat: no-repeat;
 }

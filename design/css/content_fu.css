@@ -178,7 +178,6 @@
   }
 
   #main_content ul li {
-    background-image: url(../images/list_bullet.gif);
     background-position: 0 7px;
     background-repeat: no-repeat;
     margin: 0;
