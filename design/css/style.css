@@ -27,7 +27,7 @@ p.wp-caption-text {
 
 /* Gradient at top of page. */
 div.page_margins.gradient {
-  background: #fff url(images/gradient_top.png) repeat-x;
+  background: #fff;
 }
 
 div.gradient div#header {
