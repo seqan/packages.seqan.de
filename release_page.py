@@ -135,6 +135,7 @@ class PackageDatabase(object):
                 pass
    
         # do not use .zip for linux/bsd
+        '''
         for name in self.softwares :
             for major_minor_patch in self.softwares[name].versions :
                 version = self.softwares[name].versions[major_minor_patch]
@@ -143,6 +144,7 @@ class PackageDatabase(object):
                         for arch in version.packages[os_].archs :
                             if ("zip" in version.packages[os_].archs[arch].files) :
                                 del version.packages[os_].archs[arch].files["zip"]
+        '''
 
         # do not use tar.bz2 if it contains tar.xz 
         for name in self.softwares :
