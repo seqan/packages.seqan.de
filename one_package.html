@@ -153,7 +153,7 @@
         </tr>
         <!--(for version in sorted(software.versions.values(), key=lambda x:x.version, reverse=True))-->
           <tr>
-            <td>@!version.version!@</td>
+            <td style="text-align:center">@!version.version!@<br><i>(@!version.date!@)</td> 
             @!packages_cell(prefix=software.name, packages=version.packages['Linux'])!@
             @!packages_cell(prefix=software.name, packages=version.packages['Mac'])!@
             @!packages_cell(prefix=software.name, packages=version.packages['FreeBSD'])!@
