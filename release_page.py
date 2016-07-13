@@ -58,6 +58,7 @@ class Version(object):
     def __init__(self, version):
         self.version = version
         self.packages = {}
+        self.date = ""
         for os_ in OPERATING_SYSTEMS:
             self.packages[os_] = Packages(os_)
 
@@ -134,6 +135,7 @@ class PackageDatabase(object):
                 pass
    
         # do not use .zip for linux/bsd
+        '''
         for name in self.softwares :
             for major_minor_patch in self.softwares[name].versions :
                 version = self.softwares[name].versions[major_minor_patch]
@@ -142,6 +144,7 @@ class PackageDatabase(object):
                         for arch in version.packages[os_].archs :
                             if ("zip" in version.packages[os_].archs[arch].files) :
                                 del version.packages[os_].archs[arch].files["zip"]
+        '''
 
         # do not use tar.bz2 if it contains tar.xz 
         for name in self.softwares :
@@ -152,6 +155,24 @@ class PackageDatabase(object):
                         if (("tar.bz2" in version.packages[os_].archs[arch].files) and \
                             ("tar.xz" in version.packages[os_].archs[arch].files)):
                             del version.packages[os_].archs[arch].files["tar.bz2"]
+
+        # get modified time
+        os_list = ["Linux", "Mac", "Windows"]
+        for name in self.softwares :
+            for major_minor_patch in self.softwares[name].versions :
+                version = self.softwares[name].versions[major_minor_patch]
+                found = False;
+                for os_ in os_list :
+                    if (os_ in version.packages) == False :
+                        continue
+                    for arch in version.packages[os_].archs :
+                        for suffix in version.packages[os_].archs[arch].files :
+                            filename = os.path.join(self.path, name, version.packages[os_].archs[arch].files[suffix])
+                            version.date = time.strftime("%Y-%m-%d", time.gmtime(os.path.getmtime(filename)))
+                            found = True
+                            break
+                        if found : break
+                    if found : break
 
 class RssItem(object):
     """One RSS item."""

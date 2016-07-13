@@ -2,19 +2,26 @@
 <td>
   <!--(if packages.archs['i686'].files)-->
     32bit:#!
+    $!setvar("count","0")!$#!
+    $!setvar("total","len(packages.archs['i686'].files)")!$#!
     <!--(for f in FORMATS)-->#!
       <!--(if packages.archs['i686'].files.get(f))-->#!
-      <a href="/@!prefix!@/@!packages.archs['i686'].files[f]!@">@!f!@</a>#!
+      $!setvar("count","count+1")!$#!
+      <a href="/@!prefix!@/@!packages.archs['i686'].files[f]!@">@!f!@</a><!--(if count < total)-->,<!--(end)-->#!
       <!--(end)-->#!
     <!--(end)-->#!
     <br />
   <!--(end)-->
 
+
   <!--(if packages.archs['x86_64'].files)-->
     64bit:#!
+    $!setvar("count","0")!$#!
+    $!setvar("total","len(packages.archs['x86_64'].files)")!$#!
     <!--(for f in FORMATS)-->#!
       <!--(if packages.archs['x86_64'].files.get(f))-->#!
-      <a href="/@!prefix!@/@!packages.archs['x86_64'].files[f]!@">@!f!@</a>#!
+      $!setvar("count","count+1")!$#!
+      <a href="/@!prefix!@/@!packages.archs['x86_64'].files[f]!@">@!f!@</a><!--(if count < total)-->,<!--(end)-->#!
       <!--(end)-->#!
     <!--(end)-->#!
     <br />
@@ -22,9 +29,12 @@
 
   <!--(if packages.archs['x86_64_sse4'].files)-->
     sse4:#!
+    $!setvar("count","0")!$#!
+    $!setvar("total","len(packages.archs['x86_64_sse4'].files)")!$#!
     <!--(for f in FORMATS)-->#!
       <!--(if packages.archs['x86_64_sse4'].files.get(f))-->#!
-      <a href="/@!prefix!@/@!packages.archs['x86_64_sse4'].files[f]!@">@!f!@</a>#!
+      $!setvar("count","count+1")!$#!
+      <a href="/@!prefix!@/@!packages.archs['x86_64_sse4'].files[f]!@">@!f!@</a><!--(if count < total)-->,<!--(end)-->#!
       <!--(end)-->#!
     <!--(end)-->#!
     <br />
@@ -32,9 +42,12 @@
 
   <!--(if packages.archs['x86_64_avx2'].files)-->
     avx2:#!
+    $!setvar("count","0")!$#!
+    $!setvar("total","len(packages.archs['x86_64_avx2'].files)")!$#!
     <!--(for f in FORMATS)-->#!
       <!--(if packages.archs['x86_64_avx2'].files.get(f))-->#!
-      <a href="/@!prefix!@/@!packages.archs['x86_64_avx2'].files[f]!@">@!f!@</a>#!
+      $!setvar("count","count+1")!$#!
+      <a href="/@!prefix!@/@!packages.archs['x86_64_avx2'].files[f]!@">@!f!@</a><!--(if count < total)-->,<!--(end)-->#!
       <!--(end)-->#!
     <!--(end)-->#!
     <br />
@@ -151,9 +164,9 @@
           <th>FreeBSD</th>
           <th>Windows</th>
         </tr>
-        <!--(for version in sorted(software.versions.values(), key=lambda x:x.version, reverse=True))-->
+        <!--(for i, version in enumerate(sorted(software.versions.values(), key=lambda x:x.version, reverse=True)))-->
           <tr>
-            <td>@!version.version!@</td>
+            <td style="text-align:center">@!version.version!@<br><i>(@!version.date!@)</td> 
             @!packages_cell(prefix=software.name, packages=version.packages['Linux'])!@
             @!packages_cell(prefix=software.name, packages=version.packages['Mac'])!@
             @!packages_cell(prefix=software.name, packages=version.packages['FreeBSD'])!@
@@ -179,6 +192,13 @@ you can try that, it will have an even better performance.</p>
 administrator/root account, they might not work. In these cases just use the
 archives (.tar or .zip). On Linux the native format is .deb for Debian, Ubuntu
 and Mint; and .rpm on Fedora, Redhat, Centos, OpenSUSE. </p>
+<br>
+<p><b>Will this work on all versions of my operating system?</b></p>
+<p><ul>
+    <li><b>- Linux</b>: the packages are built statically on a CentOS6 system and should work on all distributions with a <b>kernel version >= 2.6.32.</b></li>
+    <li><b>- Windows</b>: the packages should work on all versions of Windows.</li>
+    <li><b>- FreeBSD & macOS</b>: Only the most recent version of the operating system is officially supported, but the previous version will likely work, too.</li>
+</ul></p>
 </div>
 <!-- end: notice -->
                                 <div class="last_updated"><small class="dimmed"> Last Update @!utc_time!@</small></div>
