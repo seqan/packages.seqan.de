@@ -41,7 +41,8 @@ do
   then
     make package -j 4
     echo "mv $app* $target_dir"
-    mv "$app"* "$target_dir" 
+    mkdir -p "$target_dir/$app"
+    mv "$app"* "$target_dir/$app" 
     #rsync -az "$app"* "$target_dir/$app"
   fi
 done
