@@ -20,17 +20,17 @@ LIBRARY_PATTERN = (r'seqan-library-([0-9])\.([0-9])(?:\.([0-9]))?\.'
                    '(tar\.gz|tar\.bz2|tar\.xz|zip)')
 APPS_PATTERN = (r'seqan-apps-([0-9])\.([0-9])(?:\.([0-9]))?-'
                 '(Linux|Mac|FreeBSD|Windows)-(x86_64|x86_64_sse4|x86_64_avx2|i686)?'
-                '\.(tar\.gz|tar\.bz2|tar\.xz|zip|exe)')
+                '\.(tar\.gz|tar\.bz2|tar\.xz|zip|exe|msi)')
 # The regular expression to use for matching patterns.
 PACKAGE_PATTERN = (r'(.*)-([0-9]+)\.([0-9]+)(?:\.([0-9]+))?-'
                    '(Linux|Mac|FreeBSD|Windows)-(x86_64|x86_64_sse4|x86_64_avx2|i686)?'
-                   '\.(tar\.gz|tar\.bz2|tar\.xz|zip|exe|deb|rpm|dmg)')
+                   '\.(tar\.gz|tar\.bz2|tar\.xz|zip|exe|msi|deb|rpm|dmg)')
 # The operating systems that we expect.
 OPERATING_SYSTEMS = ['Linux', 'Mac', 'FreeBSD', 'Windows', 'src']
 # The architectures that we expect.
 ARCHITECTURES = ['x86_64', 'x86_64_sse4', 'x86_64_avx2', 'i686', 'src']
 # The file formats.
-FORMATS = ['tar.gz', 'tar.bz2', 'tar.xz', 'zip', 'exe', 'deb', 'rpm', 'dmg']
+FORMATS = ['tar.gz', 'tar.bz2', 'tar.xz', 'zip', 'exe', 'msi', 'deb', 'rpm', 'dmg']
 # Path to template.
 TPL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         'release_page.html')
