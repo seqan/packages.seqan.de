@@ -10,6 +10,7 @@ import sys
 import time
 import xml.sax.saxutils
 from distutils.version import StrictVersion
+from collections import OrderedDict
 
 import pyratemp
 
@@ -66,8 +67,18 @@ class Version(object):
 class Software(object):
     def __init__(self, name):
         self.name = name
-        self.versions = {}
+        self.versions = OrderedDict()
 
+def sorted_nicely( l ):
+    """ Sorts the given iterable in the way that is expected.
+
+    Required arguments:
+    l -- The iterable to be sorted.
+    """
+
+    convert = lambda text: int(text) if text.isdigit() else text
+    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
+    return sorted(l, key = alphanum_key)
 
 class PackageDatabase(object):
     def __init__(self, path):
@@ -84,7 +95,8 @@ class PackageDatabase(object):
             if os.path.isdir(os.path.join(self.path, x)):
                 for y in os.listdir(os.path.join(self.path, x)):
                     xs.append(y)
-        for x in xs:
+
+        for x in sorted_nicely(xs):
             if re.match(SRC_PATTERN, x):
                 major, minor, patch, suffix = re.match(SRC_PATTERN, x).groups()
                 if not patch:

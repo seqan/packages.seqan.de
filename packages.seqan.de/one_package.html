@@ -164,7 +164,7 @@
           <th>FreeBSD</th>
           <th>Windows</th>
         </tr>
-        <!--(for i, version in enumerate(sorted(software.versions.values(), key=lambda x:x.version, reverse=True)))-->
+        <!--(for i, version in enumerate(reversed(software.versions.values())))-->
           <tr>
             <td style="text-align:center">@!version.version!@<br><i>(@!version.date!@)</td> 
             @!packages_cell(prefix=software.name, packages=version.packages['Linux'])!@
