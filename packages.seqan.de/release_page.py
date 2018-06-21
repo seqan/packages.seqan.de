@@ -17,6 +17,8 @@ import pyratemp
 # Patterns matching seqan srcs, apps and library.
 SRC_PATTERN = (r'seqan-src-([0-9])\.([0-9])(?:\.([0-9]))?\.'
                    '(tar\.gz|tar\.bz2|tar\.xz|zip)')
+SEQAN3_LIBRARY_PATTERN = (r'seqan3-library-([0-9]+)(?:\.([0-9]+)\.([0-9]+))?\.'
+                          '(tar\.gz|tar\.bz2|tar\.xz|zip)')
 LIBRARY_PATTERN = (r'seqan-library-([0-9])\.([0-9])(?:\.([0-9]))?\.'
                    '(tar\.gz|tar\.bz2|tar\.xz|zip)')
 APPS_PATTERN = (r'seqan-apps-([0-9])\.([0-9])(?:\.([0-9]))?-'
@@ -60,6 +62,7 @@ class Version(object):
         self.version = version
         self.packages = {}
         self.date = ""
+        self.is_nightly_stable = False
         for os_ in OPERATING_SYSTEMS:
             self.packages[os_] = Packages(os_)
 
@@ -85,6 +88,7 @@ class PackageDatabase(object):
         self.path = path
         self.seqan_apps = Software('SeqAn Apps')
         self.seqan_library = Software('SeqAn Library')
+        self.seqan3_library = Software('SeqAn3 Library')
         self.seqan_src = Software('SeqAn Sources')
         self.softwares = {}
 
@@ -117,6 +121,21 @@ class PackageDatabase(object):
                     software.versions[major_minor_patch] = Version(major_minor_patch)
                 version = software.versions[major_minor_patch]
                 version.packages['src'].archs['src'].files[suffix] = x
+            elif re.match(SEQAN3_LIBRARY_PATTERN, x):
+                major, minor, patch, suffix = re.match(SEQAN3_LIBRARY_PATTERN, x).groups()
+                is_nightly = False
+                version_id = ''
+                if not patch and not minor:
+                    is_nightly = True
+                    version_id = '%s' % (major)
+                else:
+                    version_id = '%s.%s.%s' % (major, minor, patch)
+                software = self.seqan3_library
+                if not version_id in software.versions:
+                    software.versions[version_id] = Version(version_id)
+                version = software.versions[version_id]
+                version.is_nightly_stable = is_nightly
+                version.packages['src'].archs['src'].files[suffix] = x
             elif re.match(APPS_PATTERN, x):
                 major, minor, patch, os_, arch, suffix = re.match(APPS_PATTERN, x).groups()
                 if not patch:
@@ -145,7 +164,7 @@ class PackageDatabase(object):
                 version.packages[os_].archs[arch].files[suffix] = filename
             else:
                 pass
-   
+
         # do not use .zip for linux/bsd
         '''
         for name in self.softwares :
@@ -158,7 +177,7 @@ class PackageDatabase(object):
                                 del version.packages[os_].archs[arch].files["zip"]
         '''
 
-        # do not use tar.bz2 if it contains tar.xz 
+        # do not use tar.bz2 if it contains tar.xz
         for name in self.softwares :
             for major_minor_patch in self.softwares[name].versions :
                 version = self.softwares[name].versions[major_minor_patch]
@@ -265,6 +284,7 @@ def work(options):
         f.write(tpl(FORMATS=FORMATS,
                     seqan_apps=db.seqan_apps,
                     seqan_library=db.seqan_library,
+                    seqan3_library=db.seqan3_library,
                     seqan_src=db.seqan_src,
                     softwares=db.softwares,
                     utc_time=time.strftime('%a, %d %b %Y %H:%M:%S UTC', time.gmtime()),
@@ -277,7 +297,7 @@ def work(options):
             os.makedirs(out_path)
         except :
             pass
-        
+
         out_path += "/index.html"
         print >>sys.stderr, 'Writing %s.' % out_path
         with open(out_path, 'wb') as f:
